@@ -93,9 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  Widget build(BuildContext context) {  
+    final appBar = AppBar(
         title: Text('Despesas Pessoais'),
         actions: <Widget>[
           IconButton(
@@ -103,27 +102,43 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () => _openTransactionFormModal(context),
           )
         ],
-      ),
+      );
+      
+    final availableHeight = MediaQuery.of(context).size.height 
+      - appBar.preferredSize.height 
+      - MediaQuery.of(context).padding.top
+      - 25;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Chart(_recentTransactions),
+              
+              Container(
+                height: availableHeight * 0.180,
+                child: Chart(_recentTransactions)),
               SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  'Lista de transações',
-                  style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                child: Container(
+                  height: availableHeight * 0.05,
+                  child: Text(
+                    'Lista de transações',
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 18 * MediaQuery.of(context).textScaleFactor,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
               SizedBox(height: 10),
-              TransactionList(_transactions, _removeTransaction),
+              Container(
+                height: availableHeight * 0.75,
+                child: TransactionList(_transactions, _removeTransaction)),
             ],
           ),
         ),

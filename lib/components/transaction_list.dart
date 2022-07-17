@@ -10,65 +10,63 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 550,
-      child: transactions.isEmpty
-          ? Column(
-              children: [
-                SizedBox(height: 100),
-                Center(
-                  child: Container(
-                      height: 200,
-                      child: Image.asset(
-                        'assets/images/waiting.png',
-                        fit: BoxFit.cover,
-                      )),
-                ),
-              ],
-            )
-          : ListView.builder(
-              itemCount: transactions.length,
-              itemBuilder: (ctx, index) {
-                final tr = transactions[index];
-                return Card(
-                  elevation: 5,
-                  child: ListTile(
-                    leading: Container(
-                      width: 90,
-                      padding: EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.secondary),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: FittedBox(
-                        child: Text(
-                          'R\$ ${tr.value.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            fontFamily: 'Poppins',
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
+    return transactions.isEmpty
+        ? Column(
+            children: [
+              SizedBox(height: 100),
+              Center(
+                child: Container(
+                    height: 200,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    )),
+              ),
+            ],
+          )
+        : ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (ctx, index) {
+              final tr = transactions[index];
+              return Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Container(
+                    width: 90,
+                    height: 40,
+                    padding: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.secondary),
+                        borderRadius: BorderRadius.circular(4)),
+                    child: FittedBox(
+                      child: Text(
+                        'R\$ ${tr.value.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          fontFamily: 'Poppins',
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                     ),
-                    title: Text(
-                      tr.title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    subtitle: Text(DateFormat('d MMM y').format(tr.date)),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.delete_outline_rounded,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      onPressed: () => onRemove(tr.id),
-                    ),
                   ),
-                );
-              },
-            ),
-    );
+                  title: Text(
+                    tr.title,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  subtitle: Text(DateFormat('d MMM y').format(tr.date)),
+                  trailing: IconButton(
+                    icon: Icon(
+                      Icons.delete_outline_rounded,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onPressed: () => onRemove(tr.id),
+                  ),
+                ),
+              );
+            },
+          );
   }
 }
 
